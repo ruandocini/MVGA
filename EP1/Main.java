@@ -18,7 +18,8 @@ public class Main {
 				for (int y=0; y < n; y++){
 					int position = in.nextInt();
 					test_matriz.set(x,y,position);
-					System.out.println(position);
+					// System.out.print(x+" "+y+" "+position+"\n");
+					// System.out.println(position);
 				}
 			}
 		}
@@ -30,7 +31,8 @@ public class Main {
 
 		}
 		else if("determinante".equals(operacao)){
-
+			double result = test_matriz.determinante(test_matriz);
+			System.out.println(result);
 		}
 		else {
 			System.out.println("Operação desconhecida!");

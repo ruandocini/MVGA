@@ -200,7 +200,6 @@ public class Matriz {
 		int system_dimension = this.getLinesLen();
 		double result = 1.0;
 		for (int j = 0; j < system_dimension; j++){
-			// System.out.println(this.get(j,j));
 			result = result * this.get(j,j);
 		}
 		return result;
