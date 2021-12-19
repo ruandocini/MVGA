@@ -1,6 +1,7 @@
+package EP1;
 // classe que representa uma matriz de valores do tipo double.
 
-class Matriz {
+public class Matriz {
 
 	// constante para ser usada na comparacao de valores double.
 	// Se a diferenca absoluta entre dois valores double for menor

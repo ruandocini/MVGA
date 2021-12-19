@@ -1,6 +1,7 @@
+package EP1;
 import java.util.*;
 
-public class EP1 {
+public class Main {
 
 	// metodo principal.
 
@@ -9,8 +10,18 @@ public class EP1 {
 		Scanner in = new Scanner(System.in);	// Scanner para facilitar a leitura de dados a partir da entrada padrao.
 		String operacao = in.next();		// le, usando o scanner, a string que determina qual operacao deve ser realizada.
 		int n = in.nextInt();			// le a dimensão da matriz a ser manipulada pela operacao escolhida.
+		Matriz test_matriz = new Matriz(n, n);
 
-		// TODO: completar este metodo.
+		while(in.hasNext()){
+
+			for (int x=0; x < n; x++){
+				for (int y=0; y < n; y++){
+					int position = in.nextInt();
+					test_matriz.set(x,y,position);
+					System.out.println(position);
+				}
+			}
+		}
 
 		if("resolve".equals(operacao)){
 

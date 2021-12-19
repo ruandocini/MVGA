@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch EP1",
+            "request": "launch",
+            "mainClass": "EP1",
+            "projectName": "MVGA_5d85cc3e"
+        },
+        {
+            "name": "Python",
+            "type": "python",
+            "request": "launch",
+            "env": {
+                "SCOOPUS_API": "37e2dd5f266836a649c824780a81717e"
+            }
+        }
+    ]
+}
