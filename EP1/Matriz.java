@@ -1,4 +1,4 @@
-package EP1;
+package MVGA.EP1;
 // classe que representa uma matriz de valores do tipo double.
 
 public class Matriz {
@@ -231,7 +231,29 @@ public class Matriz {
 
 	public void formaEscalonadaReduzida(Matriz agregada){
 
-		// TODO: implementar este metodo.		
+		/*ELIMINAÇÃO POR COLUNA
+		Remover coluna m:
+			a)dividir linha por amm (para pivô=1)
+			b)eliminar elementos abaixo e acima do pivô
+			c)atualizar matriz
+		*/
+		int i=0;
+		while(i<agregada.col){
+			double pivo = agregada.m[i][i];
+			if (pivo == 1) i++;
+			//dividindo linha para pivo = 1:
+			for(int ini=0; ini<agregada.lin; agregada.m[i][ini] = agregada.m[i][ini]/pivo);
+			//Eliminar elem 
+			int linha=0;
+			while(linha < agregada.lin){
+				if (linha == i) linha++;
+				double fatorM = -agregada.m[linha][i]/pivo;
+				//atualiza linha percorrendo coluna j
+				for(int j = 0; j<agregada.col; agregada.m[linha][j] = fatorM * agregada.m[i][j]+agregada.m[linha][j]);
+				}
+			linha++;
+		}
+		i++;
 	}
 }
 

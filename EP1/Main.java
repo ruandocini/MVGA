@@ -1,4 +1,4 @@
-package EP1;
+package MVGA.EP1;
 import java.util.*;
 
 public class Main {
