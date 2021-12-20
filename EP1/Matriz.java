@@ -240,6 +240,12 @@ public class Matriz {
 		int i=0;
 		while(i<agregada.col){
 			double pivo = agregada.m[i][i];
+			double linhaAux[];
+			if (pivo == 0){
+				linhaAux = agregada.m[i];
+				agregada.m[i] = agregada.m[i+1];
+				agregada.m[i+1] = linhaAux;
+			}
 			if (pivo == 1) i++;
 			//dividindo linha para pivo = 1:
 			for(int ini=0; ini<agregada.lin; agregada.m[i][ini] = agregada.m[i][ini]/pivo);
