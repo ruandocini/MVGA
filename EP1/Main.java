@@ -17,7 +17,7 @@ public class Main {
 			for (int x=0; x < n; x++){
 				for (int y=0; y < n; y++){
 					int position = in.nextInt();
-					test_matriz.set(x,y,position);
+					test_matriz.setValorDeElemento(x,y,position);
 					// System.out.print(x+" "+y+" "+position+"\n");
 					// System.out.println(position);
 				}
