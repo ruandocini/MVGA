@@ -3,64 +3,58 @@ package EP1;
 
 public class Matriz {
 
-	// constante para ser usada na comparacao de valores double.
-	// Se a diferenca absoluta entre dois valores double for menor
-	// do que o valor definido por esta constante, eles devem ser
-	// considerados iguais.
-	public static final double SMALL = 0.000001;
+	public static final double constante_desprezivel = 0.000001;
 	
-	private int lin, col;	
-	private double [][] m;
+	private int numero_de_linhas, numero_de_colunas;	
+	private double [][] elementos;
 
 	// metodo estatico que cria uma matriz identidade de tamanho n x n.
-
-	public static Matriz identidade(int n){
-
-		Matriz mat = new Matriz(n, n);
-		for(int i = 0; i < mat.lin; i++) mat.m[i][i] = 1;
-		return mat;
-	}	
+	public static Matriz identidade(int tamanho) {
+		Matriz matriz = new Matriz(tamanho, tamanho);
+		for (int i = 0; i < matriz.numero_de_linhas; i++) {
+			matriz.elementos[i][i] = 1;
+		}
+		return matriz;
+	}
 
 	// construtor que cria uma matriz de n linhas por m colunas com todas as entradas iguais a zero.
-
-	public Matriz(int n, int m){
-
-		this.lin = n;
-		this.col = m;
-		this.m = new double[lin][col];
+	public Matriz(int numero_de_linhas, int numero_de_colunas) {
+		this.numero_de_linhas = numero_de_linhas;
+		this.numero_de_colunas = numero_de_colunas;
+		this.elementos = new double[this.numero_de_linhas][this.numero_de_colunas];
 	}
 
-	public void set(int i, int j, double valor){
+	public void setValorDeElemento(int i, int j, double valor){
 
-		m[i][j] = valor;
+		this.elementos[i][j] = valor;
 	}
 
-	public double get(int i, int j){
+	public double getValorDeElemento(int i, int j){
 
-		return m[i][j];
+		return this.elementos[i][j];
 	}
 
 	// metodo que imprime as entradas da matriz.
 
 	public void imprime(){
 
-		for(int i = 0; i < lin; i++){
+		for(int i = 0; i < numero_de_linhas; i++){
 
-			for(int j = 0; j < col; j++){
+			for(int j = 0; j < numero_de_colunas; j++){
 	
-				System.out.printf("%7.2f ", m[i][j]);
+				System.out.printf("%7.2f ", elementos[i][j]);
 			}
 
 			System.out.println();
 		}
 	}
 
-	public Integer getLinesLen(){
-		return this.lin;
+	public Integer getNumeroDeLinhas(){
+		return this.numero_de_linhas;
 	}
 
-	public Integer getColumnsLen(){
-		return this.col;
+	public Integer getNumeroDeColunas(){
+		return this.numero_de_colunas;
 	}
 
 	// metodo que imprime a matriz expandida formada pela combinacao da matriz que 
@@ -70,18 +64,18 @@ public class Matriz {
 
 	public void imprime(Matriz agregada){
 
-		for(int i = 0; i < lin; i++){
+		for(int i = 0; i < numero_de_linhas; i++){
 
-			for(int j = 0; j < col; j++){
+			for(int j = 0; j < numero_de_colunas; j++){
 	
-				System.out.printf("%7.2f ", m[i][j]);
+				System.out.printf("%7.2f ", elementos[i][j]);
 			}
 
 			System.out.print(" |");
 
-			for(int j = 0; j < agregada.col; j++){
+			for(int j = 0; j < agregada.numero_de_colunas; j++){
 	
-				System.out.printf("%7.2f ", agregada.m[i][j]);
+				System.out.printf("%7.2f ", agregada.elementos[i][j]);
 			}
 
 			System.out.println();
@@ -92,17 +86,17 @@ public class Matriz {
 	// voltar pra private viu?
 	private void trocaLinha(int i1, int i2){
 		
-		Matriz duplicate_matriz = new Matriz(this.getLinesLen(), this.getColumnsLen());
+		Matriz duplicate_matriz = new Matriz(this.getNumeroDeLinhas(), this.getNumeroDeColunas());
 
-		for (int i = 0; i < this.getLinesLen(); i++) {
-            for (int j = 0; j < this.getColumnsLen(); j++) {
-                duplicate_matriz.set(i, j, this.get(i, j));
+		for (int i = 0; i < this.getNumeroDeLinhas(); i++) {
+            for (int j = 0; j < this.getNumeroDeColunas(); j++) {
+                duplicate_matriz.setValorDeElemento(i, j, this.getValorDeElemento(i, j));
             }
         }
 
-        for (int j = 0; j < this.getColumnsLen(); j++) {
-            this.set(i1, j, duplicate_matriz.get(i2, j));
-            this.set(i2, j, duplicate_matriz.get(i1, j));
+        for (int j = 0; j < this.getNumeroDeColunas(); j++) {
+            this.setValorDeElemento(i1, j, duplicate_matriz.getValorDeElemento(i2, j));
+            this.setValorDeElemento(i2, j, duplicate_matriz.getValorDeElemento(i1, j));
         }
 	
 	}
@@ -111,20 +105,18 @@ public class Matriz {
 
 	private void multiplicaLinha(int i, double k){
 
-		for (int j = 0; j < this.getColumnsLen(); j++) {
-			this.set(i, j, this.get(i, j)*k);
+		for (int j = 0; j < this.getNumeroDeColunas(); j++) {
+			this.setValorDeElemento(i, j, this.getValorDeElemento(i, j)*k);
 		}
         
 	}
 
 	// metodo que faz a seguinte combinacao de duas linhas da matriz:
-	//	
-	// 	(linha i1) = (linha i1) + (linha i2 * k)
-	//
+	//	(linha i1) = (linha i1) + (linha i2 * k)
 	private void combinaLinhas(int i1, int i2, double k){
 
-		for (int j = 0; j < this.getColumnsLen(); j++) {
-            this.set(i1, j, this.get(i1, j)+this.get(i2, j)*k);
+		for (int j = 0; j < this.getNumeroDeColunas(); j++) {
+            this.setValorDeElemento(i1, j, this.getValorDeElemento(i1, j)+this.getValorDeElemento(i2, j)*k);
         }
 	}
 
@@ -138,14 +130,14 @@ public class Matriz {
 
 		int pivo_col, pivo_lin;
 
-		pivo_lin = lin;
-		pivo_col = col;
+		pivo_lin = numero_de_linhas;
+		pivo_col = numero_de_colunas;
 
-		for(int i = ini; i < lin; i++){
+		for(int i = ini; i < numero_de_linhas; i++){
 		
 			int j;
 			
-			for(j = 0; j < col; j++) if(Math.abs(m[i][j]) > 0) break;
+			for(j = 0; j < numero_de_colunas; j++) if(Math.abs(elementos[i][j]) > 0) break;
 
 			if(j < pivo_col) {
 
@@ -166,7 +158,7 @@ public class Matriz {
 
 	public double formaEscalonada(Matriz agregada){
 
-		int system_dimension = this.getLinesLen();
+		int system_dimension = this.getNumeroDeLinhas();
 
 		for(int i = 0; i < system_dimension; i++){
 			// int pivo[] = encontraLinhaPivo(i);
@@ -183,9 +175,9 @@ public class Matriz {
 				this.trocaLinha(i, pivo[0]);
 			}
 			for(int j = i+1; j < system_dimension; j++){
-				double multiplier = this.get(j,i)/this.get(i,i);
+				double multiplier = this.getValorDeElemento(j,i)/this.getValorDeElemento(i,i);
 				for(int n = i; n < system_dimension; n++){ 
-					this.set(j,n,this.get(j,n)-this.get(i,n)*multiplier);
+					this.setValorDeElemento(j,n,this.getValorDeElemento(j,n)-this.getValorDeElemento(i,n)*multiplier);
 				}
 			}
 		}
@@ -197,17 +189,17 @@ public class Matriz {
 
 	public double determinante(Matriz agregada){
 		this.formaEscalonada(agregada);
-		int system_dimension = this.getLinesLen();
+		int system_dimension = this.getNumeroDeLinhas();
 		double result = 1.0;
 		for (int j = 0; j < system_dimension; j++){
-			result = result * this.get(j,j);
+			result = result * this.getValorDeElemento(j,j);
 		}
 		return result;
 	}
 
 	public void calculaSolucao(Matriz agregada){
 		
-		int system_dimension = this.getLinesLen();
+		int system_dimension = this.getNumeroDeLinhas();
 		int system_solutions[] = new int[system_dimension];
 
 		for(int i = system_dimension-1; i >= 0; i--){
@@ -215,10 +207,10 @@ public class Matriz {
 			double sum = 0.0;
 
 			for(int j = i+1; j < system_dimension; j++){
-				sum += this.get(i,j)*agregada.get(j,0);
+				sum += this.getValorDeElemento(i,j)*agregada.getValorDeElemento(j,0);
 			}
 
-			agregada.set(i, 0, (this.get(i,system_dimension)-sum)/this.get(i,i));
+			agregada.setValorDeElemento(i, 0, (this.getValorDeElemento(i,system_dimension)-sum)/this.getValorDeElemento(i,i));
 		}
 
 	}

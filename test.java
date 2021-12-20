@@ -11,19 +11,19 @@ public class test {
             
         for (int i = 0; i < lin; i++) {
             for (int j = 0; j < col; j++) {
-                test_matriz.set(i, j, i+j+1);
+                test_matriz.setValorDeElemento(i, j, i+j+1);
             }
         }
 
-        test_matriz.set(0,0,1);
-        test_matriz.set(0,1,2);
-        test_matriz.set(0,2,1);
-        test_matriz.set(1,0,1);
-        test_matriz.set(1,1,3);
-        test_matriz.set(1,2,2);
-        test_matriz.set(2,0,1);
-        test_matriz.set(2,1,4);
-        test_matriz.set(2,2,2);
+        test_matriz.setValorDeElemento(0,0,1);
+        test_matriz.setValorDeElemento(0,1,2);
+        test_matriz.setValorDeElemento(0,2,1);
+        test_matriz.setValorDeElemento(1,0,1);
+        test_matriz.setValorDeElemento(1,1,3);
+        test_matriz.setValorDeElemento(1,2,2);
+        test_matriz.setValorDeElemento(2,0,1);
+        test_matriz.setValorDeElemento(2,1,4);
+        test_matriz.setValorDeElemento(2,2,2);
 
         // 1 2 1
         // 1 3 2
