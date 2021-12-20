@@ -36,15 +36,11 @@ public class Matriz {
 
 	// metodo que imprime as entradas da matriz.
 
-	public void imprime(){
-
+	public void imprimirMatriz(){
 		for(int i = 0; i < numero_de_linhas; i++){
-
 			for(int j = 0; j < numero_de_colunas; j++){
-	
 				System.out.printf("%7.2f ", elementos[i][j]);
 			}
-
 			System.out.println();
 		}
 	}
@@ -61,7 +57,6 @@ public class Matriz {
 	// chama o metodo com a matriz "agregada" recebida como parametro. Ou seja, cada 
 	// linha da matriz impressa possui as entradas da linha correspondente da matriz 
 	// que chama o metodo, seguida das entradas da linha correspondente em "agregada".
-
 	public void imprime(Matriz agregada){
 
 		for(int i = 0; i < numero_de_linhas; i++){
@@ -98,7 +93,6 @@ public class Matriz {
             this.setValorDeElemento(i1, j, duplicate_matriz.getValorDeElemento(i2, j));
             this.setValorDeElemento(i2, j, duplicate_matriz.getValorDeElemento(i1, j));
         }
-	
 	}
 
 	// metodo que multiplica as entradas da linha i pelo escalar k
@@ -116,7 +110,7 @@ public class Matriz {
 	private void combinaLinhas(int i1, int i2, double k){
 
 		for (int j = 0; j < this.getNumeroDeColunas(); j++) {
-            this.setValorDeElemento(i1, j, this.getValorDeElemento(i1, j)+this.getValorDeElemento(i2, j)*k);
+            this.setValorDeElemento(i1, j, this.getValorDeElemento(i1, j) + this.getValorDeElemento(i2, j)*k);
         }
 	}
 
@@ -125,29 +119,28 @@ public class Matriz {
 	// coluna referentes a entrada nao nula encontrada sao devolvidos como retorno do metodo.
 	// Este metodo ja esta pronto para voces usarem na implementacao da eliminacao gaussiana
 	// e eleminacao de Gauss-Jordan.
+	private int [] encontraLinhaPivo(int inicial){
 
-	private int [] encontraLinhaPivo(int ini){
+		int coluna_pivo, linha_pivo;
 
-		int pivo_col, pivo_lin;
+		linha_pivo = numero_de_linhas;
+		coluna_pivo = numero_de_colunas;
 
-		pivo_lin = numero_de_linhas;
-		pivo_col = numero_de_colunas;
-
-		for(int i = ini; i < numero_de_linhas; i++){
+		for(int i = inicial; i < numero_de_linhas; i++){
 		
 			int j;
 			
 			for(j = 0; j < numero_de_colunas; j++) if(Math.abs(elementos[i][j]) > 0) break;
 
-			if(j < pivo_col) {
+			if(j < coluna_pivo) {
 
-				pivo_lin = i;
-				pivo_col = j;
+				linha_pivo = i;
+				coluna_pivo = j;
 			}
 
 		}
 
-		return new int [] { pivo_lin, pivo_col };
+		return new int [] { linha_pivo, coluna_pivo };
 	}
 
 	// metodo que implementa a eliminacao gaussiana, que coloca a matriz (que chama o metodo)

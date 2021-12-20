@@ -48,7 +48,7 @@ public class test {
     public static void teste() {
         Matriz test_matriz = new Matriz(2, 2);
         Matriz id = Matriz.identidade(1);
-        id.imprime();
+        id.imprimirMatriz();
     }
     
 }
