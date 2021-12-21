@@ -48,14 +48,38 @@ public class Main {
 		// agregada.imprime();
 
 		if("resolve".equals(operacao)){
-			matriz.eliminate(agregada);
-			// matriz.formaEscalonadaReduzida(agregada);
-			matriz.imprime();
-			System.out.println(" ");
-			agregada.imprime();
-		}
+			matriz.formaEscalonadaReduzida(agregada);
+			//inifnity -> sem solucao
+			//nan -> multiplas soluções
+			String solution = "";
+			for (int i=0; i < matriz.getColumnsLen(); i++){
+				if (Double.isInfinite(agregada.get(i,0))){
+					solution = "sistema sem solução";	
+					break;		
+				} else if (Double.isNaN(agregada.get(i,0))){
+					solution = "sistema possui diversas soluções";
+					break;
+				} else {
+					solution = "sistema possui uma solução";
+				}
+			}
+
+			if (solution.equals("sistema sem solução")){
+				System.out.println("sistema sem solução");
+			} else if (solution.equals("sistema possui diversas soluções")){
+				System.out.println("sistema possui diversas soluções");
+			} else {
+				agregada.imprime();
+			}
+		}	
 		else if("inverte".equals(operacao)){
-			matriz.calculaInversa();
+			double det = matriz.determinante(matriz);
+			if (det == 0){
+				System.out.println("sistema sem solução");
+			} else {
+				// matriz.inverse(matriz);
+				matriz.imprime();
+			}
 		}
 		else if("determinante".equals(operacao)){
 			double result = matriz.determinante(matriz);

@@ -169,15 +169,13 @@ public class Matriz {
 		int system_dimension = this.getLinesLen();
 
 		for(int i = 0; i < system_dimension; i++){
-			// int pivo[] = encontraLinhaPivo(i);
 			int linhaPivo = i;
 			int pivo[] = encontraLinhaPivo(i);
 
-			// System.out.println(system_dimension);
 
-			if (pivo[1] != linhaPivo) {
-				this.trocaLinha(i, pivo[1]);
-				agregada.trocaLinha(i, pivo[1]);
+			if (pivo[0] != linhaPivo) {
+				this.trocaLinha(i, pivo[0]);
+				agregada.trocaLinha(i, pivo[0]);
 			}
 			for(int j = i+1; j < system_dimension; j++){
 				double multiplier = this.get(j,i)/this.get(i,i);
@@ -188,39 +186,7 @@ public class Matriz {
 			}
 		}
 
-		// double det = this.determinante(this);
-
-		// this.imprime();
 		return 0.0;
-	}
-
-	public double determinante(Matriz matriz){
-		this.formaEscalonada(matriz);
-		int system_dimension = this.getLinesLen();
-		double result = 1.0;
-		for (int j = 0; j < system_dimension; j++){
-			result = result * this.get(j,j);
-		}
-		return result;
-	}
-
-
-	public void calculaSolucao(Matriz agregada){
-		
-		int system_dimension = this.getLinesLen();
-		int system_solutions[] = new int[system_dimension];
-
-		for(int i = system_dimension-1; i >= 0; i--){
-			
-			double sum = 0.0;
-
-			for(int j = i+1; j < system_dimension; j++){
-				sum += this.get(i,j)*agregada.get(j,0);
-			}
-
-			agregada.set(i, 0, (this.get(i,system_dimension)-sum)/this.get(i,i));
-		}
-
 	}
 
 	// metodo que implementa a eliminacao de Gauss-Jordan, que coloca a matriz (que chama o metodo)
@@ -231,70 +197,11 @@ public class Matriz {
 
 	public void formaEscalonadaReduzida(Matriz agregada){
 
-		/*ELIMINAÇÃO POR COLUNA
-		Remover coluna m:
-			a)dividir linha por amm (para pivô=1)
-			b)eliminar elementos abaixo e acima do pivô
-			c)atualizar matriz
-		*/
-		int i=0;
-		while(i<this.col){
-			double pivo = this.m[i][i];
-			double linhaAux[];
-			if (pivo == 0){
-				linhaAux = this.m[i];
-				this.m[i] = this.m[i+1];
-				this.m[i+1] = linhaAux;
-			}
-			if (pivo == 1) i++;
-			//dividindo linha para pivo = 1:
-			for(int ini=0; ini<this.lin; this.m[i][ini] = this.m[i][ini]/pivo);
-			//Eliminar elem 
-			int linha=0;
-			while(linha < this.lin){
-				if (linha == i) linha++;
-				double fatorM = -this.m[linha][i]/pivo;
-				//atualiza linha percorrendo coluna j
-				for(int j = 0; j<this.col; this.m[linha][j] = fatorM * this.m[i][j]+agregada.m[linha][j]);
-				}
-			linha++;
-		}
-		i++;
-	}
-
-	public void calculaInversa(){
-		// duplicando a matriz para realizar as operacoes necessarias
-		Matriz inversa = new Matriz(this.getLinesLen(), this.getColumnsLen());
-		for (int i = 0; i < this.getLinesLen(); i++) {
-            for (int j = 0; j < this.getColumnsLen(); j++) {
-                inversa.set(i, j, this.get(i, j));
-            }
-        }
-
-		double determinante = determinante(inversa);
-
-		if (determinante == 0.0) {
-			System.out.println("matriz singular");
-		}
-		else{
-			// dividindo pelo determinante
-			for (int i = 0; i < this.getLinesLen(); i++) {
-				for (int j = 0; j < this.getColumnsLen(); j++) {
-					inversa.set(i, j, this.get(i, j)/determinante);
-				}
-			}
-			//trocando as posições
-		}
-
-
-
-	}
-
-	public void eliminate(Matriz agregada) {
         int startColumn = 0;
         for (int row=0; row<this.m.length; row++) {
-            //if the number in the start column is 0, try to switch with another
+            
             while (this.m[row][startColumn]==0.0){
+
                 boolean switched = false;
                 int i=row;
                 while (!switched && i<this.m.length) {
@@ -309,12 +216,16 @@ public class Matriz {
                     }
                     i++;
                 }
-                //if after trying to switch, it is still 0, increase column
+
+				if(row+1 == this.m.length){
+					break;
+				}
+                
                 if (this.m[row][startColumn]==0.0) {
                     startColumn++;
                 }
             }
-            //if the number isn't one, reduce to one
+            
             if(this.m[row][startColumn]!=1.0) {
                 double divisor = this.m[row][startColumn];
                 for (int i=startColumn; i<this.m[row].length; i++) {
@@ -322,7 +233,7 @@ public class Matriz {
                 }
 				agregada.m[row][0] = agregada.m[row][0]/divisor;
             }
-            //make sure the number in the start column of all other rows is 0
+            
             for (int i=0; i<this.m.length; i++) {
                 if (i!=row && this.m[i][startColumn]!=0) {
                     double multiple = 0-this.m[i][startColumn];
@@ -336,12 +247,51 @@ public class Matriz {
             }
             startColumn++;
         }
+
     }
 
-	
+	public double determinante(Matriz matrix) {
 
+        if (matrix.getLinesLen() == 1) {
+            return matrix.get(0, 0);
+        }
+        if (matrix.getLinesLen() == 2) {
 
+			return (matrix.get(0, 0) * (matrix.get(1, 1))) - ((matrix.get(0, 1) * (matrix.get(1, 0))));
+        }
+        double sum = 0;
+        for (int i = 0; i < matrix.getLinesLen(); i++) {
+            sum = sum + (changeSign(i) * (matrix.get(0, i) * (determinante(createSubMatrix(matrix, 0, i)))));
+        }
+        return sum;
+    }
 
+	public static Matriz createSubMatrix(Matriz matrix, int excluding_row, int excluding_col) {
+        Matriz mat = new Matriz(matrix.getLinesLen() - 1, matrix.getLinesLen() - 1);
+        int r = -1;
+        for (int i = 0; i < matrix.getLinesLen(); i++) {
+            if (i == excluding_row) {
+                continue;
+            }
+            r++;
+            int c = -1;
+            for (int j = 0; j < matrix.getLinesLen(); j++) {
+                if (j == excluding_col) {
+                    continue;
+                }
+                mat.set(r, ++c, matrix.get(i, j));
+            }
+        }
+        return mat;
+    }
+
+	private static double changeSign(int i) {
+        if (i % 2 == 0) {
+            return 1.0; 
+        } else {
+            return -1.0;
+        }
+    }
 
 }
 
