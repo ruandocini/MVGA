@@ -195,8 +195,8 @@ public class Matriz {
 		return 0.0;
 	}
 
-	public double determinante(Matriz agregada){
-		this.formaEscalonada(agregada);
+	public double determinante(Matriz matriz){
+		this.formaEscalonada(matriz);
 		int system_dimension = this.getLinesLen();
 		double result = 1.0;
 		for (int j = 0; j < system_dimension; j++){
@@ -233,6 +233,13 @@ public class Matriz {
 
 		// TODO: implementar este metodo.		
 	}
+
+	public double calculaInversa(){
+		
+		return 0.0;
+	}
+
+
 }
 
 // Classe "executavel".
