@@ -48,11 +48,15 @@ public class Main {
 		// agregada.imprime();
 
 		if("resolve".equals(operacao)){
-			matriz.calculaSolucao(agregada);
+			matriz.eliminate(agregada);
+			// matriz.formaEscalonadaReduzida(agregada);
+			matriz.imprime();
+			System.out.println(" ");
+			agregada.imprime();
 		}
 		else if("inverte".equals(operacao)){
 			matriz.calculaInversa();
-			}
+		}
 		else if("determinante".equals(operacao)){
 			double result = matriz.determinante(matriz);
 			System.out.println(result);

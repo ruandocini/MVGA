@@ -173,25 +173,24 @@ public class Matriz {
 			int linhaPivo = i;
 			int pivo[] = encontraLinhaPivo(i);
 
-			// System.out.println(pivo[0]);
 			// System.out.println(system_dimension);
 
-			if (pivo[0] != linhaPivo) {
-				if (pivo[0] == system_dimension) {
-					pivo[0] = pivo[0] -1;
-				}
-				this.trocaLinha(i, pivo[0]);
+			if (pivo[1] != linhaPivo) {
+				this.trocaLinha(i, pivo[1]);
+				agregada.trocaLinha(i, pivo[1]);
 			}
 			for(int j = i+1; j < system_dimension; j++){
 				double multiplier = this.get(j,i)/this.get(i,i);
 				for(int n = i; n < system_dimension; n++){ 
 					this.set(j,n,this.get(j,n)-this.get(i,n)*multiplier);
 				}
+				agregada.set(j,0,this.get(j,0)-(this.get(i,0)*multiplier));
 			}
 		}
 
-		// this.imprime();
+		// double det = this.determinante(this);
 
+		// this.imprime();
 		return 0.0;
 	}
 
@@ -239,24 +238,24 @@ public class Matriz {
 			c)atualizar matriz
 		*/
 		int i=0;
-		while(i<agregada.col){
-			double pivo = agregada.m[i][i];
+		while(i<this.col){
+			double pivo = this.m[i][i];
 			double linhaAux[];
 			if (pivo == 0){
-				linhaAux = agregada.m[i];
-				agregada.m[i] = agregada.m[i+1];
-				agregada.m[i+1] = linhaAux;
+				linhaAux = this.m[i];
+				this.m[i] = this.m[i+1];
+				this.m[i+1] = linhaAux;
 			}
 			if (pivo == 1) i++;
 			//dividindo linha para pivo = 1:
-			for(int ini=0; ini<agregada.lin; agregada.m[i][ini] = agregada.m[i][ini]/pivo);
+			for(int ini=0; ini<this.lin; this.m[i][ini] = this.m[i][ini]/pivo);
 			//Eliminar elem 
 			int linha=0;
-			while(linha < agregada.lin){
+			while(linha < this.lin){
 				if (linha == i) linha++;
-				double fatorM = -agregada.m[linha][i]/pivo;
+				double fatorM = -this.m[linha][i]/pivo;
 				//atualiza linha percorrendo coluna j
-				for(int j = 0; j<agregada.col; agregada.m[linha][j] = fatorM * agregada.m[i][j]+agregada.m[linha][j]);
+				for(int j = 0; j<this.col; this.m[linha][j] = fatorM * this.m[i][j]+agregada.m[linha][j]);
 				}
 			linha++;
 		}
@@ -290,6 +289,58 @@ public class Matriz {
 
 
 	}
+
+	public void eliminate(Matriz agregada) {
+        int startColumn = 0;
+        for (int row=0; row<this.m.length; row++) {
+            //if the number in the start column is 0, try to switch with another
+            while (this.m[row][startColumn]==0.0){
+                boolean switched = false;
+                int i=row;
+                while (!switched && i<this.m.length) {
+                    if(this.m[i][startColumn]!=0.0){
+                        double[] temp = this.m[i];
+                        this.m[i]=this.m[row];
+                        this.m[row]=temp;
+						double temp_r = agregada.m[i][0];
+						agregada.m[i][0] = agregada.m[row][0];
+						agregada.m[row][0] = temp_r;
+                        switched = true;
+                    }
+                    i++;
+                }
+                //if after trying to switch, it is still 0, increase column
+                if (this.m[row][startColumn]==0.0) {
+                    startColumn++;
+                }
+            }
+            //if the number isn't one, reduce to one
+            if(this.m[row][startColumn]!=1.0) {
+                double divisor = this.m[row][startColumn];
+                for (int i=startColumn; i<this.m[row].length; i++) {
+                    this.m[row][i] = this.m[row][i]/divisor;
+                }
+				agregada.m[row][0] = agregada.m[row][0]/divisor;
+            }
+            //make sure the number in the start column of all other rows is 0
+            for (int i=0; i<this.m.length; i++) {
+                if (i!=row && this.m[i][startColumn]!=0) {
+                    double multiple = 0-this.m[i][startColumn];
+                    for (int j=startColumn; j<this.m[row].length; j++){
+                        this.m[i][j] +=
+                            multiple*this.m[row][j];
+                    }
+					agregada.m[i][0] += multiple*agregada.m[row][0];
+
+                }
+            }
+            startColumn++;
+        }
+    }
+
+	
+
+
 
 
 }
