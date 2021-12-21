@@ -32,8 +32,8 @@ public class Main {
 						String val = in.next();
 						int position = Integer.parseInt(val);
 						matriz.set(x,y,position);
-						System.out.println(acumulator);
-						System.out.println(position);
+						// System.out.println(acumulator);
+						// System.out.println(position);
 						acumulator++;
 					}
 					// System.out.println(n);
@@ -44,22 +44,22 @@ public class Main {
 			// System.out.println(position);
 		}
 		
-		matriz.imprime();
-		agregada.imprime();
+		// matriz.imprime();
+		// agregada.imprime();
 
-		// if("resolve".equals(operacao)){
-		// 	matriz.calculaSolucao();
-		// }
-		// else if("inverte".equals(operacao)){
-		// 	matriz.calculaInversa();
-		// 	}
-		// else if("determinante".equals(operacao)){
-		// 	double result = matriz.determinante(matriz);
-		// 	System.out.println(result);
-		// }
-		// else {
-		// 	System.out.println("Operação desconhecida!");
-		// 	System.exit(1);
-		// }
+		if("resolve".equals(operacao)){
+			matriz.calculaSolucao(agregada);
+		}
+		else if("inverte".equals(operacao)){
+			matriz.calculaInversa();
+			}
+		else if("determinante".equals(operacao)){
+			double result = matriz.determinante(matriz);
+			System.out.println(result);
+		}
+		else {
+			System.out.println("Operação desconhecida!");
+			System.exit(1);
+		}
 	}
 }
