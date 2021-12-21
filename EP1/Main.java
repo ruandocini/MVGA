@@ -15,17 +15,30 @@ public class Main {
 		int max_size_line = n;
 		Matriz agregada = new Matriz(n, 1);
 
+		if("resolve".equals(operacao)){
+			n = n + 1;
+		}
+
 		for (int x=0; x < n; x++){
 			int acumulator = 0;
 			for (int y=0; y < n; y++){
-				System.out.println(in.hasNext());
-				String val = in.next();
-				int position = Integer.parseInt(val);
-				matriz.set(x,y,position);
-				acumulator++;
-			}
-			if (in.hasNext() && acumulator > max_size_line){
-				agregada.set(x,0,in.nextInt());
+				if (in.hasNext() && acumulator == max_size_line){
+					String val = in.next();
+					int position = Integer.parseInt(val);
+					agregada.set(x,0,position);
+
+				} else {
+					if (in.hasNext()){
+						String val = in.next();
+						int position = Integer.parseInt(val);
+						matriz.set(x,y,position);
+						System.out.println(acumulator);
+						System.out.println(position);
+						acumulator++;
+					}
+					// System.out.println(n);
+					// System.out.println(acumulator);
+				}
 			}
 			// System.out.print(x+" "+y+" "+position+"\n");
 			// System.out.println(position);
