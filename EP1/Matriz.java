@@ -205,6 +205,7 @@ public class Matriz {
 		return result;
 	}
 
+
 	public void calculaSolucao(Matriz agregada){
 		
 		int system_dimension = this.getLinesLen();
@@ -262,9 +263,32 @@ public class Matriz {
 		i++;
 	}
 
-	public double calculaInversa(){
-		
-		return 0.0;
+	public void calculaInversa(){
+		// duplicando a matriz para realizar as operacoes necessarias
+		Matriz inversa = new Matriz(this.getLinesLen(), this.getColumnsLen());
+		for (int i = 0; i < this.getLinesLen(); i++) {
+            for (int j = 0; j < this.getColumnsLen(); j++) {
+                inversa.set(i, j, this.get(i, j));
+            }
+        }
+
+		double determinante = determinante(inversa);
+
+		if (determinante == 0.0) {
+			System.out.println("matriz singular");
+		}
+		else{
+			// dividindo pelo determinante
+			for (int i = 0; i < this.getLinesLen(); i++) {
+				for (int j = 0; j < this.getColumnsLen(); j++) {
+					inversa.set(i, j, this.get(i, j)/determinante);
+				}
+			}
+			//trocando as posições
+		}
+
+
+
 	}
 
 
