@@ -197,95 +197,95 @@ public class Matriz {
 
 	public void formaEscalonadaReduzida(Matriz agregada){
 
-        int startColumn = 0;
-        for (int row=0; row<this.m.length; row++) {
+        int coluna = 0;
+        for (int linha=0; linha<this.m.length; linha++) {
             
-            while (this.m[row][startColumn]==0.0){
+            while (this.m[linha][coluna]==0.0){
 
-                boolean switched = false;
-                int i=row;
-                while (!switched && i<this.m.length) {
-                    if(this.m[i][startColumn]!=0.0){
+                boolean trocou = false;
+                int i=linha;
+                while (!trocou && i<this.m.length) {
+                    if(this.m[i][coluna]!=0.0){
                         double[] temp = this.m[i];
-                        this.m[i]=this.m[row];
-                        this.m[row]=temp;
+                        this.m[i]=this.m[linha];
+                        this.m[linha]=temp;
 						double temp_r = agregada.m[i][0];
-						agregada.m[i][0] = agregada.m[row][0];
-						agregada.m[row][0] = temp_r;
-                        switched = true;
+						agregada.m[i][0] = agregada.m[linha][0];
+						agregada.m[linha][0] = temp_r;
+                        trocou = true;
                     }
                     i++;
                 }
 
-				if(row+1 == this.m.length){
+				if(linha+1 == this.m.length){
 					break;
 				}
                 
-                if (this.m[row][startColumn]==0.0) {
-                    startColumn++;
+                if (this.m[linha][coluna]==0.0) {
+                    coluna++;
                 }
             }
             
-            if(this.m[row][startColumn]!=1.0) {
-                double divisor = this.m[row][startColumn];
-                for (int i=startColumn; i<this.m[row].length; i++) {
-                    this.m[row][i] = this.m[row][i]/divisor;
+            if(this.m[linha][coluna]!=1.0) {
+                double divisor = this.m[linha][coluna];
+                for (int i=coluna; i<this.m[linha].length; i++) {
+                    this.m[linha][i] = this.m[linha][i]/divisor;
                 }
-				agregada.m[row][0] = agregada.m[row][0]/divisor;
+				agregada.m[linha][0] = agregada.m[linha][0]/divisor;
             }
             
             for (int i=0; i<this.m.length; i++) {
-                if (i!=row && this.m[i][startColumn]!=0) {
-                    double multiple = 0-this.m[i][startColumn];
-                    for (int j=startColumn; j<this.m[row].length; j++){
+                if (i!=linha && this.m[i][coluna]!=0) {
+                    double multiple = 0-this.m[i][coluna];
+                    for (int j=coluna; j<this.m[linha].length; j++){
                         this.m[i][j] +=
-                            multiple*this.m[row][j];
+                            multiple*this.m[linha][j];
                     }
-					agregada.m[i][0] += multiple*agregada.m[row][0];
+					agregada.m[i][0] += multiple*agregada.m[linha][0];
 
                 }
             }
-            startColumn++;
+            coluna++;
         }
 
     }
 
-	public double determinante(Matriz matrix) {
+	public double determinante(Matriz matriz) {
 
-        if (matrix.getLinesLen() == 1) {
-            return matrix.get(0, 0);
+        if (matriz.getLinesLen() == 1) {
+            return matriz.get(0, 0);
         }
-        if (matrix.getLinesLen() == 2) {
+        if (matriz.getLinesLen() == 2) {
 
-			return (matrix.get(0, 0) * (matrix.get(1, 1))) - ((matrix.get(0, 1) * (matrix.get(1, 0))));
+			return (matriz.get(0, 0) * (matriz.get(1, 1))) - ((matriz.get(0, 1) * (matriz.get(1, 0))));
         }
         double sum = 0;
-        for (int i = 0; i < matrix.getLinesLen(); i++) {
-            sum = sum + (changeSign(i) * (matrix.get(0, i) * (determinante(createSubMatrix(matrix, 0, i)))));
+        for (int i = 0; i < matriz.getLinesLen(); i++) {
+            sum = sum + (mudaSinal(i) * (matriz.get(0, i) * (determinante(criaSubMatriz(matriz, 0, i)))));
         }
         return sum;
     }
 
-	public static Matriz createSubMatrix(Matriz matrix, int excluding_row, int excluding_col) {
-        Matriz mat = new Matriz(matrix.getLinesLen() - 1, matrix.getLinesLen() - 1);
+	public static Matriz criaSubMatriz(Matriz matriz, int exclui_linha, int exclui_col) {
+        Matriz mat = new Matriz(matriz.getLinesLen() - 1, matriz.getLinesLen() - 1);
         int r = -1;
-        for (int i = 0; i < matrix.getLinesLen(); i++) {
-            if (i == excluding_row) {
+        for (int i = 0; i < matriz.getLinesLen(); i++) {
+            if (i == exclui_linha) {
                 continue;
             }
             r++;
             int c = -1;
-            for (int j = 0; j < matrix.getLinesLen(); j++) {
-                if (j == excluding_col) {
+            for (int j = 0; j < matriz.getLinesLen(); j++) {
+                if (j == exclui_col) {
                     continue;
                 }
-                mat.set(r, ++c, matrix.get(i, j));
+                mat.set(r, ++c, matriz.get(i, j));
             }
         }
         return mat;
     }
 
-	private static double changeSign(int i) {
+	private static double mudaSinal(int i) {
         if (i % 2 == 0) {
             return 1.0; 
         } else {

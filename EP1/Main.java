@@ -89,5 +89,6 @@ public class Main {
 			System.out.println("Operação desconhecida!");
 			System.exit(1);
 		}
+		in.close();
 	}
 }
