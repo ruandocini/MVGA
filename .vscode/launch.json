@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "EP1.Main",
+            "projectName": "MVGA_5d85cc3e"
+        },
+        {
+            "type": "java",
             "name": "Launch EP1",
             "request": "launch",
             "mainClass": "EP1",

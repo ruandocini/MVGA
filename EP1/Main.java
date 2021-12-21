@@ -1,5 +1,6 @@
-package MVGA.EP1;
+package EP1;
 import java.util.*;
+import EP1.Matriz;
 
 public class Main {
 

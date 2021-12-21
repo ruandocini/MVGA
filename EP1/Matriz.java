@@ -1,4 +1,4 @@
-package MVGA.EP1;
+package EP1;
 // classe que representa uma matriz de valores do tipo double.
 
 public class Matriz {
