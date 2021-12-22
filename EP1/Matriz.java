@@ -293,6 +293,10 @@ public class Matriz {
         }
     }
 
+	public void inverte(Matriz matriz){
+		
+	}
+
 }
 
 // Classe "executavel".
