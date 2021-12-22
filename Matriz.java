@@ -1,3 +1,7 @@
+/*
+  NOME: RUANITTO ROBERTO DOCINI	  | N° USP: 11390806 
+  NOME: ALAINA RIBEIRO DOS SANTOS | N° USP: 11837352
+*/
 import java.util.*;
 public class Matriz {
 	// constante para ser usada na comparacao de valores double.

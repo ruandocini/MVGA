@@ -1,7 +1,4 @@
-/*
-  NOME: RUANITTO ROBERTO DOCINI	  | N° USP: 11390806 
-  NOME: ALAINA RIBEIRO DOS SANTOS | N° USP: 11837352
-*/
+
 package EP1;
 import java.util.*;
 import EP1.Matriz;
